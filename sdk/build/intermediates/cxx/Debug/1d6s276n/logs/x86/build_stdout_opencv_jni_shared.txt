@@ -1,0 +1,2 @@
+ninja: Entering directory `C:\Users\fstai\AndroidStudioProjects\MocaTest\sdk\.cxx\Debug\1d6s276n\x86'
+ninja: no work to do.

@@ -1,0 +1,149 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Clock numbers -->
+
+    <!-- Clock contour -->
+
+    <LinearLayout
+        android:id="@+id/numbersRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageNumberOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_one"
+            android:src="@drawable/number_one" />
+
+        <ImageView
+            android:id="@+id/imageNumberTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_two"
+            android:src="@drawable/number_two" />
+
+        <ImageView
+            android:id="@+id/imageNumberThree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_three"
+            android:src="@drawable/number_three" />
+
+        <ImageView
+            android:id="@+id/imageNumberFour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_four"
+            android:src="@drawable/number_four" />
+
+        <ImageView
+            android:id="@+id/imageNumberFive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_five"
+            android:src="@drawable/number_five" />
+
+        <ImageView
+            android:id="@+id/imageNumberSix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_six"
+            android:src="@drawable/number_six" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/numbersRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/imageClockContour"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageNumberSeven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_seven"
+            android:src="@drawable/number_seven" />
+
+        <ImageView
+            android:id="@+id/imageNumberEight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_eight"
+            android:src="@drawable/number_eight" />
+
+        <ImageView
+            android:id="@+id/imageNumberNine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_nine"
+            android:src="@drawable/number_nine" />
+
+        <ImageView
+            android:id="@+id/imageNumberTen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_ten"
+            android:src="@drawable/number_ten" />
+
+        <ImageView
+            android:id="@+id/imageNumberEleven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_eleven"
+            android:src="@drawable/number_eleven" />
+
+        <ImageView
+            android:id="@+id/imageNumberTwelve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/number_twelve"
+            android:src="@drawable/number_twelve" />
+    </LinearLayout>
+
+    <!-- Clock hands -->
+    <ImageView
+        android:id="@+id/imageClockContour"
+        android:layout_width="363dp"
+        android:layout_height="418dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/clock_contour" />
+
+    <ImageView
+        android:id="@+id/imageHourHand"
+        android:layout_width="100dp"
+        android:layout_height="140dp"
+        android:layout_alignTop="@id/imageClockContour"
+        android:layout_marginTop="320dp"
+        android:contentDescription="@string/hour_hand"
+        android:src="@drawable/hour_hand" />
+
+    <ImageView
+        android:id="@+id/imageMinuteHand"
+        android:layout_width="100dp"
+        android:layout_height="170dp"
+        android:layout_alignTop="@id/imageClockContour"
+        android:layout_marginTop="478dp"
+        android:contentDescription="@string/minute_hand"
+        android:rotation="46"
+        android:src="@drawable/minute_hand" />
+    <!-- Submit button -->
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginTop="650dp"
+        android:layout_marginLeft="170dp"
+        android:text="Submit" />
+</RelativeLayout>
