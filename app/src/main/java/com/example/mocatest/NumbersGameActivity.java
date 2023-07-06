@@ -187,6 +187,7 @@ public class NumbersGameActivity extends AppCompatActivity implements TextToSpee
             }
 
             Toast.makeText(this, "Score: " + score, Toast.LENGTH_SHORT).show();
+            startNextActivity(score);
             // Go to the next activity or reset the game as per your requirement
         }
     }
@@ -267,4 +268,16 @@ public class NumbersGameActivity extends AppCompatActivity implements TextToSpee
         // Remove any pending handler messages
         handler.removeCallbacksAndMessages(null);
     }
+    private void startNextActivity(int score) {
+        Intent intent = new Intent(NumbersGameActivity.this, LetterGame.class);
+        int ClockScore = intent.getIntExtra("ClockScore", 0);
+        int DrawingScore = intent.getIntExtra("DrawingScore", 0);
+        int AnimalQuizScore= intent.getIntExtra("AnimalQuizScore", 0);
+        intent.putExtra("AnimalQuizScore", AnimalQuizScore); // Pass the score as an extra with the intent
+        intent.putExtra("DrawingScore", DrawingScore);
+        intent.putExtra("ClockScore", ClockScore);
+        intent.putExtra("Score", score);
+        startActivity(intent);
+    }
+
 }

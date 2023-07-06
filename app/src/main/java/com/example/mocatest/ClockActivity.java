@@ -1,6 +1,7 @@
 package com.example.mocatest;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -16,22 +17,31 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ClockActivity extends AppCompatActivity {
 
     private Rect contourRect;
-
+    private float lastTouchX, lastTouchY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
+        Intent intent = getIntent();
+        int fullName = intent.getIntExtra("FULL_NAME", 0);
+        int DrawingScore = intent.getIntExtra("score", 0);
 // Find the submit button
         Button btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Calculate the score
-                int score = calculateScore();
-                // Do something with the score (e.g., display it)
-                Toast.makeText(ClockActivity.this, "Score: " + score, Toast.LENGTH_SHORT).show();
+                int ClockScore = calculateScore();
+
+                // Create an Intent to start the next activity
+                Intent intent = new Intent(ClockActivity.this, AnimalQuizActivity.class);
+                intent.putExtra("FULL_NAME", fullName);
+                intent.putExtra("DrawingScore", DrawingScore);
+                intent.putExtra("ClockScore", ClockScore); // Pass the score as an extra with the intent
+                startActivity(intent);
             }
         });
+
         // Set the drag listeners for the numbers and hands
         setDragListener(R.id.imageNumberOne);
         setDragListener(R.id.imageNumberTwo);
@@ -47,7 +57,7 @@ public class ClockActivity extends AppCompatActivity {
         setDragListener(R.id.imageNumberTwelve);
 
         setDragListener(R.id.imageHourHand);
-        setDragListener(R.id.imageMinuteHand);
+
 
         // Get the rect of the clock contour
         ImageView contourView = findViewById(R.id.imageClockContour);
@@ -59,80 +69,40 @@ public class ClockActivity extends AppCompatActivity {
     private void setDragListener(int viewId) {
         final ImageView view = findViewById(viewId);
 
-        // Get the rect of the clock contour
-        ImageView contourView = findViewById(R.id.imageClockContour);
-        contourRect = new Rect();
-        contourView.getHitRect(contourRect);
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    ClipData clipData = ClipData.newPlainText("", "");
-                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
-                    v.startDragAndDrop(clipData, shadowBuilder, v, 0);
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        contourView.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
                 int action = event.getAction();
 
                 switch (action) {
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        // Check if the dragged view is a number
-                        if (event.getLocalState() instanceof ImageView) {
-                            // No need to hide the dragged view
-                        }
-                        break;
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        // Check if the dragged view is a number and is inside the contour
-                        if (event.getLocalState() instanceof ImageView && v == contourView) {
-                            ImageView draggedNumber = (ImageView) event.getLocalState();
-                            // Show visual feedback indicating the correct drop position
-                            // For example, change the background color of the contour
-                            contourView.setBackgroundColor(Color.GREEN);
-                        }
-                        break;
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        // Check if the dragged view is a number and is inside the contour
-                        if (event.getLocalState() instanceof ImageView && v == contourView) {
-                            ImageView draggedNumber = (ImageView) event.getLocalState();
-                            // Reset the visual feedback
-                            // For example, change the background color of the contour back to its original color
-                            contourView.setBackgroundColor(Color.TRANSPARENT);
-                        }
-                        break;
-                    case DragEvent.ACTION_DROP:
-                        // Check if the dragged view is a number and is dropped inside the contour
-                        if (event.getLocalState() instanceof ImageView && v == contourView) {
-                            ImageView draggedNumber = (ImageView) event.getLocalState();
-                            int centerX = (int) (event.getX() - draggedNumber.getWidth() / 2);
-                            int centerY = (int) (event.getY() - draggedNumber.getHeight() / 2);
-                            // Set the position of the dragged number to the dropped position on the contour
-                            draggedNumber.setX(centerX);
-                            draggedNumber.setY(centerY);
-                            // Reset the visual feedback
-                            contourView.setBackgroundColor(Color.TRANSPARENT);
-                            return true;
-                        }
-                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        lastTouchX = event.getRawX();
+                        lastTouchY = event.getRawY();
+                        return true;
 
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        // Check if the dragged view is a number
-                        if (event.getLocalState() instanceof ImageView) {
-                            ImageView draggedNumber = (ImageView) event.getLocalState();
-                            // No need to change the visibility of the dragged view
-                        }
-                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float dx = event.getRawX() - lastTouchX;
+                        float dy = event.getRawY() - lastTouchY;
+
+                        float newX = view.getX() + dx;
+                        float newY = view.getY() + dy;
+
+                        // Update the position of the dragged view
+                        view.setX(newX);
+                        view.setY(newY);
+
+                        lastTouchX = event.getRawX();
+                        lastTouchY = event.getRawY();
+                        return true;
+
+                    case MotionEvent.ACTION_UP:
+                        // Perform any necessary actions when the dragging is completed
+                        return true;
                 }
-                return true;
+
+                return false;
             }
         });
-
     }
     private int calculateScore() {
         int score = 0;
@@ -147,9 +117,9 @@ public class ClockActivity extends AppCompatActivity {
 
         // Check the correctness of the hands
         ImageView hand1 = findViewById(R.id.imageHourHand);
-        ImageView hand2 = findViewById(R.id.imageMinuteHand);
+
         // Add your logic to check if the hands are inside the contour
-        boolean areHandsInsideContour = isViewInsideContour(hand1, contourView) && isViewInsideContour(hand2, contourView);
+        boolean areHandsInsideContour = isViewInsideContour(hand1, contourView);
         if (areHandsInsideContour) {
             score += 1;
         }

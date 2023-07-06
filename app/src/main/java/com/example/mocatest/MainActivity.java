@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Create an intent to launch the LoginActivity
-                Intent intent = new Intent(MainActivity.this, AnimalQuizActivity.class);
+                Intent intent = new Intent(MainActivity.this, MemoryActivity.class);
 
                 // Start the LoginActivity
                 startActivity(intent);

@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "User registered with ID " + userId, Toast.LENGTH_SHORT).show();
                 // Redirect to DrawingActivity
                 Intent intent = new Intent(LoginActivity.this, DrawingActivity.class);
+                intent.putExtra("FULL_NAME", fullName);  // Replace "fullName" with the actual full name value
                 startActivity(intent);
             }
         });

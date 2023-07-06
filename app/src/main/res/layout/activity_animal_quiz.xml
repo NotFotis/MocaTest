@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="377dp"
-        android:layout_height="519dp"
+        android:layout_width="383dp"
+        android:layout_height="464dp"
         android:scaleType="fitCenter" />
 
     <EditText
