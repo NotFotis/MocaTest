@@ -99,8 +99,9 @@ public class MemoryActivity extends AppCompatActivity implements TextToSpeech.On
         } else {
             // Trials completed, perform any necessary cleanup or go to the next activity.
         }
-        Intent intent = new Intent(MemoryActivity.this, WordInputActivity.class);
+        Intent intent = new Intent(MemoryActivity.this, NumbersGameActivity.class);
         intent.putStringArrayListExtra("wordList", new ArrayList<>(wordList));
+        intent.putExtra("result4", 0);
         startActivity(intent);
     }
 
@@ -137,14 +138,7 @@ public class MemoryActivity extends AppCompatActivity implements TextToSpeech.On
             speakButton.performClick(); // Simulate button click to start next trial
         }
 
-        Intent intent = new Intent(MemoryActivity.this, NumbersGameActivity.class);
-        int ClockScore = intent.getIntExtra("ClockScore", 0);
-        int DrawingScore = intent.getIntExtra("DrawingScore", 0);
-        int AnimalQuizScore= intent.getIntExtra("AnimalQuizScore", 0);
-        intent.putExtra("AnimalQuizScore", AnimalQuizScore); // Pass the score as an extra with the intent
-        intent.putExtra("DrawingScore", DrawingScore);
-        intent.putExtra("ClockScore", ClockScore);
-        startActivity(intent);
+
     }
 
 

@@ -47,23 +47,8 @@ public class WordInputActivity extends AppCompatActivity {
                     resultTextView.setText("Your score: " + score + " out of 5");
                 }
                 Intent intent = new Intent(WordInputActivity.this, OrientationActivity.class);
-                int ClockScore = intent.getIntExtra("ClockScore", 0);
-                int DrawingScore = intent.getIntExtra("DrawingScore", 0);
-                int AnimalQuizScore= intent.getIntExtra("AnimalQuizScore", 0);
-                int LetterGameScore = intent.getIntExtra("score",0);
-                int SubtractionScore = intent.getIntExtra("finalScore",0);
-                int SpeechScore = intent.getIntExtra("score",0);
-                int WordScore = intent.getIntExtra("score",0);
-                int SimilarityScore = intent.getIntExtra("score",0);
-                intent.putExtra("AnimalQuizScore", AnimalQuizScore); // Pass the score as an extra with the intent
-                intent.putExtra("DrawingScore", DrawingScore);
-                intent.putExtra("ClockScore", ClockScore);
-                intent.putExtra("score", LetterGameScore);
-                intent.putExtra("finalScore", SubtractionScore);
-                intent.putExtra("score", SpeechScore);
-                intent.putExtra("score", WordScore);
-                intent.putExtra("score", SimilarityScore);
-                intent.putExtra("score", score);
+
+                intent.putExtra("result11", score);
                 startActivity(intent);
                 resultTextView.setVisibility(View.VISIBLE);
             }

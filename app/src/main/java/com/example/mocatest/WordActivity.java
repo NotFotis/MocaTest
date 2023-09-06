@@ -92,19 +92,7 @@ public class WordActivity extends AppCompatActivity {
 
                 int score = (wordCount > 10) ? 1 : 0;
                 Intent intent = new Intent(WordActivity.this, SimilarityActivity.class);
-                int ClockScore = intent.getIntExtra("ClockScore", 0);
-                int DrawingScore = intent.getIntExtra("DrawingScore", 0);
-                int AnimalQuizScore= intent.getIntExtra("AnimalQuizScore", 0);
-                int LetterGameScore = intent.getIntExtra("LetterGameScore",0);
-                int SubtractionScore = intent.getIntExtra("SubtractionScore",0);
-                int SpeechScore = intent.getIntExtra("score",0);
-                intent.putExtra("AnimalQuizScore", AnimalQuizScore); // Pass the score as an extra with the intent
-                intent.putExtra("DrawingScore", DrawingScore);
-                intent.putExtra("ClockScore", ClockScore);
-                intent.putExtra("LetterGameScore", LetterGameScore);
-                intent.putExtra("SubtractionScore", SubtractionScore);
-                intent.putExtra("score", SpeechScore);
-                intent.putExtra("score", score);
+                intent.putExtra("result9", score);
                 startActivity(intent);
                 String result = "Word count: " + wordCount + "\nScore: " + score;
                 timerTextView.setText(result);

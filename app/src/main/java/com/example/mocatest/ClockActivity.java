@@ -18,6 +18,8 @@ public class ClockActivity extends AppCompatActivity {
 
     private Rect contourRect;
     private float lastTouchX, lastTouchY;
+    private int ClockScore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,19 +27,18 @@ public class ClockActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int fullName = intent.getIntExtra("FULL_NAME", 0);
         int DrawingScore = intent.getIntExtra("score", 0);
-// Find the submit button
+
+        // Find the submit button
         Button btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Calculate the score
-                int ClockScore = calculateScore();
+                ClockScore = calculateScore();
 
                 // Create an Intent to start the next activity
                 Intent intent = new Intent(ClockActivity.this, AnimalQuizActivity.class);
-                intent.putExtra("FULL_NAME", fullName);
-                intent.putExtra("DrawingScore", DrawingScore);
-                intent.putExtra("ClockScore", ClockScore); // Pass the score as an extra with the intent
+                intent.putExtra("result2", ClockScore); // Pass the score as an extra with the intent
                 startActivity(intent);
             }
         });
@@ -57,7 +58,6 @@ public class ClockActivity extends AppCompatActivity {
         setDragListener(R.id.imageNumberTwelve);
 
         setDragListener(R.id.imageHourHand);
-
 
         // Get the rect of the clock contour
         ImageView contourView = findViewById(R.id.imageClockContour);
@@ -104,13 +104,14 @@ public class ClockActivity extends AppCompatActivity {
             }
         });
     }
+
     private int calculateScore() {
         int score = 0;
 
         // Check the correctness of the contour
         ImageView contourView = findViewById(R.id.imageClockContour);
         // Add your logic to check if the contour is correct
-        boolean isContourCorrect = true /* Check if the contour is correct */;
+        boolean isContourCorrect = true; /* Check if the contour is correct */
         if (isContourCorrect) {
             score += 1;
         }
@@ -144,20 +145,23 @@ public class ClockActivity extends AppCompatActivity {
                 isViewInsideContour(number5,contourView) && isViewInsideContour(number6,contourView) &&
                 isViewInsideContour(number7,contourView) && isViewInsideContour(number8,contourView) &&
                 isViewInsideContour(number9,contourView) && isViewInsideContour(number10,contourView) &&
-                isViewInsideContour(number11,contourView) && isViewInsideContour(number12,contourView) /* Check if the numbers are correct */;
+                isViewInsideContour(number11,contourView) && isViewInsideContour(number12,contourView); /* Check if the numbers are correct */
         if (areNumbersCorrect) {
             score += 1;
         }
-
+        Toast.makeText(this, "Your score: " + score , Toast.LENGTH_SHORT).show();
         return score;
     }
+
     private boolean isViewInsideContour(View view, View contourView) {
         Rect contourRect = new Rect();
-        contourView.getHitRect(contourRect);
+        contourView.getGlobalVisibleRect(contourRect);
+
         int[] location = new int[2];
         view.getLocationOnScreen(location);
-        int viewX = location[0];
-        int viewY = location[1];
+        int viewX = location[0] + view.getWidth() / 2;
+        int viewY = location[1] + view.getHeight() / 2;
+
         return contourRect.contains(viewX, viewY);
     }
 

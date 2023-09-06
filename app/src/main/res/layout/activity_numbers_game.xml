@@ -8,6 +8,22 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ΠΡΟΣΟΧΗ"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/promptTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Πατηστε έναρξη για να ξεκινήσετε τη δοκιμασία"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp" />
+
     <EditText
         android:id="@+id/editTextUserInput"
         android:layout_width="match_parent"
@@ -15,13 +31,13 @@
         android:layout_marginBottom="16dp"
         android:inputType="text"
         android:visibility="gone"
-        android:hint="Enter the numbers (separated by spaces)" />
+        android:hint="Πληκτρολογήστε τους αριθμούς (διαχωρισμένους με κενό)" />
 
     <Button
         android:id="@+id/buttonBegin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Begin" />
+        android:text="ΕΝΑΡΞΗ" />
 
 
 </LinearLayout>

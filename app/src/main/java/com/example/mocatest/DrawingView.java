@@ -1,36 +1,46 @@
 package com.example.mocatest;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 public class DrawingView extends View {
-    private Path drawingPath;
-    private Paint drawingPaint;
+    private Paint paint;
+    private Bitmap canvasBitmap;
+    private Canvas drawCanvas;
+    private float previousX, previousY;
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        setupDrawing();
     }
 
-    private void init() {
-        drawingPath = new Path();
+    private void setupDrawing() {
+        paint = new Paint();
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(5);
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
 
-        drawingPaint = new Paint();
-        drawingPaint.setColor(Color.BLACK);
-        drawingPaint.setStrokeWidth(5);
-        drawingPaint.setStyle(Paint.Style.STROKE);
+        previousX = -1;
+        previousY = -1;
+
+        // Set a reasonable default size for canvasBitmap
+        int width = 2000;  // Adjust as needed
+        int height = 2000; // Adjust as needed
+
+        canvasBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        drawCanvas = new Canvas(canvasBitmap);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        canvas.drawPath(drawingPath, drawingPaint);
+        canvas.drawBitmap(canvasBitmap, 0, 0, paint);
     }
 
     @Override
@@ -40,26 +50,36 @@ public class DrawingView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                drawingPath.moveTo(touchX, touchY);
+                if (previousX != -1) {
+                    drawCanvas.drawLine(previousX, previousY, touchX, touchY, paint);
+                }
+                previousX = touchX;
+                previousY = touchY;
+                invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
-                drawingPath.lineTo(touchX, touchY);
+                drawCanvas.drawLine(previousX, previousY, touchX, touchY, paint);
+                previousX = touchX;
+                previousY = touchY;
+                invalidate();
                 break;
             case MotionEvent.ACTION_UP:
-                // Drawing completed
+                previousX = -1;
+                previousY = -1;
                 break;
+            default:
+                return false;
         }
 
-        invalidate();
         return true;
     }
 
-    public Path getDrawingPath() {
-        return drawingPath;
+    public Bitmap getCanvasBitmap() {
+        return canvasBitmap;
     }
 
-    public void clearDrawing() {
-        drawingPath.reset();
+    public void clearCanvas() {
+        drawCanvas.drawColor(Color.WHITE);
         invalidate();
     }
 }

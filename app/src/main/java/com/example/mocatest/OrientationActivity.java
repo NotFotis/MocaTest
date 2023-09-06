@@ -126,25 +126,7 @@ public class OrientationActivity extends AppCompatActivity {
 
         }
         Intent intent = new Intent(OrientationActivity.this, TotalScoreActivity.class);
-        int ClockScore = intent.getIntExtra("ClockScore", 0);
-        int DrawingScore = intent.getIntExtra("DrawingScore", 0);
-        int AnimalQuizScore= intent.getIntExtra("AnimalQuizScore", 0);
-        int LetterGameScore = intent.getIntExtra("score",0);
-        int SubtractionScore = intent.getIntExtra("finalScore",0);
-        int SpeechScore = intent.getIntExtra("score",0);
-        int WordScore = intent.getIntExtra("score",0);
-        int SimilarityScore = intent.getIntExtra("score",0);
-        int WordInputScore = intent.getIntExtra("score",0);
-        intent.putExtra("AnimalQuizScore", AnimalQuizScore); // Pass the score as an extra with the intent
-        intent.putExtra("DrawingScore", DrawingScore);
-        intent.putExtra("ClockScore", ClockScore);
-        intent.putExtra("score", LetterGameScore);
-        intent.putExtra("finalScore", SubtractionScore);
-        intent.putExtra("score", SpeechScore);
-        intent.putExtra("score", WordScore);
-        intent.putExtra("score", SimilarityScore);
-        intent.putExtra("score", WordInputScore);
-        intent.putExtra("score", score);
+        intent.putExtra("result12", score);
         startActivity(intent);
         textViewScore.setText("Score: " + score);
     }

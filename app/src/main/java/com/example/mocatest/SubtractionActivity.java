@@ -77,15 +77,7 @@ public class SubtractionActivity extends AppCompatActivity {
     private void endGame() {
         int finalScore = calculateScore();
         Intent intent = new Intent(SubtractionActivity.this, SpeechActivity.class);
-        int ClockScore = intent.getIntExtra("ClockScore", 0);
-        int DrawingScore = intent.getIntExtra("DrawingScore", 0);
-        int AnimalQuizScore= intent.getIntExtra("AnimalQuizScore", 0);
-        int LetterGameScore = intent.getIntExtra("LetterGameScore",0);
-        intent.putExtra("AnimalQuizScore", AnimalQuizScore); // Pass the score as an extra with the intent
-        intent.putExtra("DrawingScore", DrawingScore);
-        intent.putExtra("ClockScore", ClockScore);
-        intent.putExtra("LetterGameScore", LetterGameScore);
-        intent.putExtra("finalScore", finalScore);
+        intent.putExtra("result7", finalScore);
         startActivity(intent);
         Toast.makeText(this, "Game Over! Your score: " + finalScore, Toast.LENGTH_LONG).show();
     }

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:hint="Προσανατολισμός"
-        android:textColor="#000000"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="34sp"
         android:textStyle="bold" />
 
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:hint="Εισάγετε τις παρακάτω πληροφορίες. Έπειτα πατήστε έλεγχος."
-        android:textColor="#000000"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
         android:textStyle="normal" />
 

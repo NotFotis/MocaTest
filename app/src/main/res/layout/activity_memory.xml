@@ -8,12 +8,21 @@
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
     tools:context=".MemoryActivity">
-
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ΜΝΗΜΗ"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="24sp"
+        android:layout_marginBottom="50dp"/>
     <TextView
         android:id="@+id/promptTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Press Speak to start the first trial."
+        android:layout_below="@id/title"
+        android:text="Πατηστε ομιλία για να ξεκινήσετε τη πρώτη δοκιμασία"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="18sp" />
 
     <EditText
@@ -22,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/promptTextView"
         android:layout_marginTop="16dp"
-        android:hint="Enter the words you heard"
+        android:hint="Πληκτρολογήστε τις λέξεις που ακούσατε"
         android:inputType="text"
         android:visibility="gone" />
 
@@ -32,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/inputEditText"
         android:layout_marginTop="16dp"
-        android:text="Speak" />
+        android:text="ΟΜΙΛΙΑ" />
 
     <Button
         android:id="@+id/submitButton"
@@ -40,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/speakButton"
         android:layout_marginTop="16dp"
-        android:text="Submit"
+        android:text="ΥΠΟΒΟΛΗ"
         android:visibility="gone" />
 
 </RelativeLayout>

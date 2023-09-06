@@ -2,8 +2,8 @@
     <string name="app_name">MocaTest</string>
     <string name="sex_prompt">Select Sex</string>
     <string-array name="sex_options">
-        <item>Male</item>
-        <item>Female</item>
+        <item>Άνδρας</item>
+        <item>Γυναίκα</item>
     </string-array>
     <string name="hour_hand">ωρα</string>
     <string name="minute_hand">λεπτο</string>
@@ -22,4 +22,6 @@
     <string name="animal_lion">Lion</string>
     <string name="animal_rhino">Rhino</string>
     <string name="animal_camel">Camel</string>
+    <string name="sequence_completed">Sequence completed!</string>
+    <string name="score_format">Score: %.2f</string>
 </resources>

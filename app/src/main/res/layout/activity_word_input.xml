@@ -13,17 +13,19 @@
         android:id="@+id/instructionsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter the words: FACE, VELVET, CHURCH, DAISY, RED"
+        android:text="Εισάγετε τις λέξεις: FACE, VELVET, CHURCH, DAISY, RED"
         android:textSize="18sp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
 
     <EditText
         android:id="@+id/wordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter a word"
+        android:hint="Πληκτρολογήστε τις λέξεις"
         android:layout_below="@id/instructionsTextView" />
 
     <Button
@@ -33,7 +35,7 @@
         android:layout_below="@id/wordEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Submit" />
+        android:text="ΥΠΟΒΟΛΗ" />
 
     <TextView
         android:id="@+id/resultTextView"

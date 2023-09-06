@@ -17,10 +17,6 @@ import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.core.TermCriteria;
-import org.opencv.imgproc.CLAHE;
-import org.opencv.imgproc.GeneralizedHoughBallard;
-import org.opencv.imgproc.GeneralizedHoughGuil;
-import org.opencv.imgproc.LineSegmentDetector;
 import org.opencv.utils.Converters;
 
 // C++: class Imgproc
@@ -5884,22 +5880,23 @@ public class Imgproc {
 
     /**
      * Compares two histograms.
-     *
+     * <p>
      * The function cv::compareHist compares two dense or two sparse histograms using the specified method.
-     *
+     * <p>
      * The function returns \(d(H_1, H_2)\) .
-     *
+     * <p>
      * While the function works well with 1-, 2-, 3-dimensional dense histograms, it may not be suitable
      * for high-dimensional sparse histograms. In such histograms, because of aliasing and sampling
      * problems, the coordinates of non-zero histogram bins can slightly shift. To compare such histograms
      * or more general sparse configurations of weighted points, consider using the #EMD function.
      *
-     * @param H1 First compared histogram.
-     * @param H2 Second compared histogram of the same size as H1 .
+     * @param H1     First compared histogram.
+     * @param H2     Second compared histogram of the same size as H1 .
+     * @param result
      * @param method Comparison method, see #HistCompMethods
      * @return automatically generated
      */
-    public static double compareHist(Mat H1, Mat H2, int method) {
+    public static double compareHist(Mat H1, Mat H2, Mat result, int method) {
         return compareHist_0(H1.nativeObj, H2.nativeObj, method);
     }
 

@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/questionTextView"
         android:layout_marginTop="16dp"
+        android:hint="Αριθμός"
         android:inputType="number" />
 
     <Button
@@ -29,6 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/answerEditText"
         android:layout_marginTop="16dp"
-        android:text="Submit" />
+        android:text="ΥΠΟΒΟΛΗ" />
 
 </RelativeLayout>

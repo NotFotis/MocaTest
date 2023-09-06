@@ -1,136 +1,138 @@
 package com.example.mocatest;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfDouble;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DrawingActivity extends AppCompatActivity {
 
-    private ImageView canvasImageView;
+    private DrawingView drawView;
+    private ImageView referenceImageView;
     private Button compareButton;
-    private TextView scoreTextView;
-
-    private Bitmap bitmap;
-    private Canvas canvas;
-    private Paint userPaint;
-    private Path userPath;
-    private RectF expectedRect;
+    private TextView similarityTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing);
 
-        canvasImageView = findViewById(R.id.canvasImageView);
+        drawView = findViewById(R.id.drawView);
+        referenceImageView = findViewById(R.id.referenceImageView);
         compareButton = findViewById(R.id.compareButton);
-        scoreTextView = findViewById(R.id.scoreTextView);
-
-        userPath = new Path();
-        expectedRect = new RectF(100, 100, 500, 500); // Example: Assuming the shape of a cube with a specific rectangular area
-
-        userPaint = new Paint();
-        userPaint.setColor(Color.RED);
-        userPaint.setStyle(Paint.Style.STROKE);
-        userPaint.setStrokeWidth(5f);
+        similarityTextView = findViewById(R.id.similarityTextView);
 
         compareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float score = compareShapes();
-                scoreTextView.setText("Score: " + score);
-                Intent intent = new Intent(DrawingActivity.this, ClockActivity.class);
-                int fullName = intent.getIntExtra("FULL_NAME", 0);
-                intent.putExtra("DrawingScore", score);
-                startActivity(intent);
-            }
+                // Get user-drawn bitmap
+                Bitmap userBitmap = drawView.getCanvasBitmap();
 
-        });
+                Bitmap referenceBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.reference_image);
+                Mat referenceMat = new Mat();
+                Utils.bitmapToMat(referenceBitmap, referenceMat);
+                Imgproc.cvtColor(referenceMat, referenceMat, Imgproc.COLOR_BGR2GRAY);
 
-        canvasImageView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                float x = event.getX();
-                float y = event.getY();
+// Convert user's drawing to Mat (assuming drawingMat contains the user's drawing)
+                Mat drawingMat = new Mat();
+                Utils.bitmapToMat(userBitmap, drawingMat);
+                Imgproc.cvtColor(drawingMat, drawingMat, Imgproc.COLOR_BGR2GRAY);
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        userPath.moveTo(x, y);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        userPath.lineTo(x, y);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        break;
-                    default:
-                        return false;
-                }
+// Apply edge detection (Canny) to both images
+                Mat referenceEdges = new Mat();
+                Imgproc.Canny(referenceMat, referenceEdges, 100, 200);
 
-                canvasImageView.invalidate();
-                return true;
-            }
-        });
+                Mat drawingEdges = new Mat();
+                Imgproc.Canny(drawingMat, drawingEdges, 100, 200);
 
-        canvasImageView.post(new Runnable() {
-            @Override
-            public void run() {
-                int width = canvasImageView.getWidth();
-                int height = canvasImageView.getHeight();
-                bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                canvas = new Canvas(bitmap);
-                canvasImageView.setImageBitmap(bitmap);
-                clearCanvas(); // Clear the canvas when it is ready
+// Find contours in both images
+                List<MatOfPoint> referenceContours = new ArrayList<>();
+                Imgproc.findContours(referenceEdges, referenceContours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+
+                List<MatOfPoint> drawingContours = new ArrayList<>();
+                Imgproc.findContours(drawingEdges, drawingContours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+
+
+                // Calculate similarity score (using SSIM for example)
+                double similarityScore = calculateSSIM(drawingMat, referenceMat);
+
+                // Display similarity score
+                similarityTextView.setText("Similarity Score: " + similarityScore);
             }
         });
     }
 
-    private float compareShapes() {
-        // Logic to compare user's drawing with the shape of a cube using geometric calculations
+    public static double calculateSSIM(Mat mat1, Mat mat2) {
+        // Convert the images to grayscale if they are not already
+        Mat mat1Gray = new Mat();
+        Mat mat2Gray = new Mat();
+        Imgproc.cvtColor(mat1, mat1Gray, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.cvtColor(mat2, mat2Gray, Imgproc.COLOR_BGR2GRAY);
 
-        // Check if the user's path intersects with the expected rectangle
-        RectF userRect = new RectF();
-        userPath.computeBounds(userRect, true);
-
-        if (RectF.intersects(expectedRect, userRect)) {
-            // Calculate the intersection area
-            RectF intersection = new RectF();
-            if (intersection.setIntersect(expectedRect, userRect)) {
-                float expectedArea = expectedRect.width() * expectedRect.height();
-                float intersectionArea = intersection.width() * intersection.height();
-
-                float score = intersectionArea / expectedArea * 2; // Normalize score to range from 0 to 2
-
-                return Math.max(score, 0f); // Ensure the score is not negative
-            }
-        }
-
-        return 0f; // No intersection, score is 0
+        // Calculate SSIM
+        double ssim = calculateSSIMValue(mat1Gray, mat2Gray);
+        return ssim;
     }
 
-    private void clearCanvas() {
-        if (canvas != null) {
-            userPath.reset();
-            canvas.drawColor(Color.WHITE);
-            canvasImageView.invalidate();
-        }
-    }
+    private static double calculateSSIMValue(Mat img1, Mat img2) {
+        int width = img1.cols();
+        int height = img1.rows();
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Clean up resources if necessary
-        bitmap.recycle();
-    }
+        Mat img1Squared = new Mat();
+        Mat img2Squared = new Mat();
+        Core.multiply(img1, img1, img1Squared);
+        Core.multiply(img2, img2, img2Squared);
 
+        Mat imgProduct = new Mat();
+        Core.multiply(img1, img2, imgProduct);
+
+        Mat mu1 = new Mat();
+        Mat mu2 = new Mat();
+        Imgproc.GaussianBlur(img1, mu1, new Size(11, 11), 1.5);
+        Imgproc.GaussianBlur(img2, mu2, new Size(11, 11), 1.5);
+
+        Mat mu1Squared = new Mat();
+        Mat mu2Squared = new Mat();
+        Core.multiply(mu1, mu1, mu1Squared);
+        Core.multiply(mu2, mu2, mu2Squared);
+
+        Mat muProduct = new Mat();
+        Core.multiply(mu1, mu2, muProduct);
+
+        Mat sigma1Squared = new Mat();
+        Mat sigma2Squared = new Mat();
+        Core.subtract(img1Squared, mu1Squared, sigma1Squared);
+        Core.subtract(img2Squared, mu2Squared, sigma2Squared);
+
+        Mat sigma12 = new Mat();
+        Core.subtract(imgProduct, muProduct, sigma12);
+
+        Mat ssimMap = new Mat();
+        Core.multiply(sigma12, new Scalar(2), ssimMap);
+        Core.add(sigma1Squared, sigma2Squared, sigma1Squared);
+        Core.add(sigma1Squared, new Scalar(0.0001), sigma1Squared); // Small constant to avoid division by zero
+        Core.divide(ssimMap, sigma1Squared, ssimMap);
+
+        Scalar mssim = Core.mean(ssimMap);
+
+        return (mssim.val[0] + mssim.val[1] + mssim.val[2]) / 3.0;
+    }
 }
+

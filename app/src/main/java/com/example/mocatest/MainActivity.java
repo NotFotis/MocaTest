@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Create an intent to launch the LoginActivity
-                Intent intent = new Intent(MainActivity.this, ClockActivity.class);
+                Intent intent = new Intent(MainActivity.this, LetterGame.class);
 
                 // Start the LoginActivity
                 startActivity(intent);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Create an intent to launch the LoginActivity
-                Intent intent = new Intent(MainActivity.this, MemoryActivity.class);
+                Intent intent = new Intent(MainActivity.this, TrailActivity.class);
 
                 // Start the LoginActivity
                 startActivity(intent);

@@ -121,13 +121,8 @@ public class AnimalQuizActivity extends AppCompatActivity implements View.OnClic
 
         // Create an Intent to start the next activity
         Intent intent = new Intent(AnimalQuizActivity.this, MemoryActivity.class);
-        int fullName = intent.getIntExtra("FULL_NAME", 0);
-        int ClockScore = intent.getIntExtra("ClockScore", 0);
-        int DrawingScore = intent.getIntExtra("DrawingScore", 0);
-        intent.putExtra("FULL_NAME",fullName);
-        intent.putExtra("AnimalQuizScore", AnimalQuizScore); // Pass the score as an extra with the intent
-        intent.putExtra("DrawingScore", DrawingScore);
-        intent.putExtra("ClockScore", ClockScore);
+        intent.putExtra("result3", AnimalQuizScore); // Pass the score as an extra with the intent
         startActivity(intent);
+        finish();
     }
 }

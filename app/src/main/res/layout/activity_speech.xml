@@ -7,17 +7,24 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ΓΛΩΣΣΑ"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
         android:id="@+id/questionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Απάντηση"
+        android:text="Ακούστε τις προτάσεις και στη συνέχεια πληκτρολογήστε τις στο παρακάτω πεδίο"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <EditText
         android:id="@+id/userInputEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ΠΛηκτρτολογήστε την απάντηση" />
+        android:hint="Πληκτρτολογήστε την απάντηση" />
 
     <Button
         android:id="@+id/submitButton"

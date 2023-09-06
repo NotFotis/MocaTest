@@ -81,7 +81,7 @@ public class LetterGame extends AppCompatActivity implements TextToSpeech.OnInit
 
         Button submitButton = new Button(this);
         submitButton.setLayoutParams(params);
-        submitButton.setText("Submit");
+        submitButton.setText("Υποβολή");
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,15 +114,7 @@ public class LetterGame extends AppCompatActivity implements TextToSpeech.OnInit
             score = 1.0;
         }
         Intent intent = new Intent(LetterGame.this, SubtractionActivity.class);
-        int ClockScore = intent.getIntExtra("ClockScore", 0);
-        int DrawingScore = intent.getIntExtra("DrawingScore", 0);
-        int AnimalQuizScore= intent.getIntExtra("AnimalQuizScore", 0);
-        int LetterGameScore = intent.getIntExtra("LetterGameScore",0);
-        intent.putExtra("AnimalQuizScore", AnimalQuizScore); // Pass the score as an extra with the intent
-        intent.putExtra("DrawingScore", DrawingScore);
-        intent.putExtra("ClockScore", ClockScore);
-        intent.putExtra("LetterGameScore", LetterGameScore);
-        intent.putExtra("Score", score);
+        intent.putExtra("result6", score);
         startActivity(intent);
         Toast.makeText(LetterGame.this, "Score: " + score, Toast.LENGTH_SHORT).show();
     }

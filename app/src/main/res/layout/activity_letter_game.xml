@@ -6,12 +6,21 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ακουστε τον καταλαγο με τα γραμματα. Πατηστε το Α καθε φορα που το ακουτε. Στο τελος πατηστε υποβολη"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
     <Button
         android:id="@+id/start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Start" />
+        android:text="Έναρξη" />
 
     <LinearLayout
         android:id="@+id/button_layout"
